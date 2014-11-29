@@ -100,6 +100,7 @@ def form_to_params(fn):
     Convert bottle forms request to parameters for the wrapped function.
     """
     @wraps(fn)
+    @handle_type_error
     def param_wrapper(*args, **kwargs):
         kwargs.update(
             dict(request.forms)

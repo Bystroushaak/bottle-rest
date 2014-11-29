@@ -18,10 +18,7 @@ def decode_json_body():
     Returns:
         obj: Structure decoded by ``json.loads()``.
     """
-    raw_data = request.body.readlines()
-
-    if type(raw_data) in [list, tuple]:
-        raw_data = "".join(raw_data)
+    raw_data = request.body.read()
 
     return json.loads(raw_data)
 

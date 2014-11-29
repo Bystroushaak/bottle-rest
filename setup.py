@@ -31,5 +31,6 @@ setup(
     install_requires=[
         'setuptools',
         "bottle",
+        "sphinxcontrib-napoleon>=0.2.5"  # napoleon docstrings
     ],
 )

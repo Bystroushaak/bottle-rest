@@ -1,0 +1,4 @@
+include CHANGES.rst README.rst
+recursive-include unittests *
+recursive-include docs *
+recursive-exclude docs/_build *

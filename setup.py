@@ -28,7 +28,7 @@ setup(
     ],
     license='MIT',
 
-    packages=find_packages(".", exclude=['ez_setup']),
+    packages=find_packages('src'),
     package_dir={'': 'src'},
 
     include_package_data=True,
@@ -36,6 +36,5 @@ setup(
     install_requires=[
         'setuptools',
         "bottle",
-        "sphinxcontrib-napoleon>=0.2.5"  # napoleon docstrings
     ],
 )

@@ -1,4 +1,4 @@
-rbottle.egg-info/*
+src/rbottle.egg-info/*
 docs/_build/*
 dist/*
 *.pyc

@@ -1,4 +1,4 @@
-include CHANGES.rst README.rst
+include CHANGES.rst README.rst LICENSE.txt
 recursive-include unittests *
 recursive-include docs *
 recursive-exclude docs/_build *

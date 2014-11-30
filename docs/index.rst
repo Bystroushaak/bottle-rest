@@ -142,19 +142,17 @@ Testing
 This project uses `pytest <http://pytest.org>`_ for testing. You can run
 the tests from the root of the package using following command::
 
-    $ py.test
+    $ py.test unittests/
 
 Which will output something like::
 
-    ============================= test session starts ==============================
-    platform linux2 -- Python 2.7.6 -- py-1.4.23 -- pytest-2.6.0
-    collected 11 items 
-
-    unittests/test_bson_utils.py ..
-    unittests/test_rest.py ....
-    unittests/test_utils.py .....
-
-    ========================== 11 passed in 0.29 seconds ===========================
+ ============================= test session starts ==============================
+ platform linux2 -- Python 2.7.6 -- py-1.4.23 -- pytest-2.6.0
+ collected 13 items 
+ 
+ unittests/test_rbottle.py .............
+ 
+ ========================== 13 passed in 0.09 seconds ===========================
 
 Indices and tables
 ==================
@@ -162,4 +160,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

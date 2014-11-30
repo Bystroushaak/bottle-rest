@@ -38,15 +38,21 @@ def handle_type_error(fn):
         HTTPError: 400 in case too many/too little function parameters were \
                    given.
     """
+    def any_match(string_list, obj):
+        return filter(lambda x: x in obj, string_list)
+
     @wraps(fn)
     def handle_type_error_wrapper(*args, **kwargs):
         try:
             return fn(*args, **kwargs)
         except TypeError as e:
-            msg = e.message
-            if fn.__name__ in msg and \
-               ("got an unexpected" in msg or "takes exactly" in msg):
-                raise HTTPError(400, msg)
+            str_list = [
+                "takes exactly",
+                "got an unexpected",
+                "takes no argument",
+            ]
+            if fn.__name__ in e.message and any_match(str_list, e.message):
+                raise HTTPError(400, e.message)
 
             raise  # This will cause 500: Internal server error
 
@@ -70,8 +76,8 @@ def json_to_params(fn=None, return_json=True):
                     convert returned value to JSON?
     """
     def json_to_params_decorator(fn):
-        @wraps(fn)
         @handle_type_error
+        @wraps(fn)
         def json_to_params_wrapper(*args, **kwargs):
             data = decode_json_body()
 
@@ -111,8 +117,8 @@ def json_to_data(fn=None, return_json=True):
                     convert returned value to JSON?
     """
     def json_to_data_decorator(fn):
-        @wraps(fn)
         @handle_type_error
+        @wraps(fn)
         def get_data_wrapper(*args, **kwargs):
             kwargs["data"] = decode_json_body()
 
@@ -140,8 +146,8 @@ def form_to_params(fn=None, return_json=True):
                     convert returned value to JSON?
     """
     def forms_to_params_decorator(fn):
-        @wraps(fn)
         @handle_type_error
+        @wraps(fn)
         def forms_to_params_wrapper(*args, **kwargs):
             kwargs.update(
                 dict(request.forms)

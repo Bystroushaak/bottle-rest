@@ -34,23 +34,19 @@ easier: :func:`.json_to_params`, :func:`.json_to_data` and
 :func:`.form_to_params`.
 
 All three of them maps input data to parameters of your function, so instead of
-code like::
+code like*::
 
     import json
     from bottle import post, request, HTTPError
 
     @post("/somepath")
     def handler():
-        body = request.body.readlines()
-        data = json.loads(body)
-
-        if "somevar" not in data:
+        if "somevar" not in body.json:
             raise HTTPError(400, "'somevar' parameter is required!")
 
-        return json.dumps({
-            "something": 1,
-            "result": database[data[somevar]]
-        })
+        return json.dumps(
+            database[body.json[somevar]]
+        )
 
 you can use just::
 
@@ -60,11 +56,9 @@ you can use just::
     @post("/somepath")
     @json_to_params
     def handler(somevar):
-        return {
-            "something": 1,
-            "result": database[somevar]
-        }
+        return database[somevar]
 
+*Edit: Returned dicts are by Bottle automatically converted to JSON, but other types are not. Thats why I am using explicit conversion (also, there is pretty print).
 
 json_to_params
 ++++++++++++++

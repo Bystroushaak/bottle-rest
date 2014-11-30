@@ -7,7 +7,7 @@
 import json
 from functools import wraps
 
-from bottle import request, HTTPError
+from bottle import request, response, HTTPError
 
 
 # Functions & classes =========================================================
@@ -27,6 +27,26 @@ def decode_json_body():
         return json.loads(raw_data)
     except ValueError as e:
         raise HTTPError(400, e.message)
+
+
+def encode_json_body(data):
+    """
+    Return prettified JSON `data`, set ``response.content_type`` to
+    ``application/json; charset=utf-8``.
+
+    Args:
+        data: Any basic python data structure.
+
+    Returns:
+        str: Data converted to prettified JSON.
+    """
+    response.content_type = "application/json; charset=utf-8"
+
+    return json.dumps(
+        data,
+        indent=4,
+        separators=(',', ': ')
+    )
 
 
 def handle_type_error(fn):
@@ -95,7 +115,7 @@ def json_to_params(fn=None, return_json=True):
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return json.dumps(
+            return encode_json_body(
                 fn(*args, **kwargs)
             )
 
@@ -125,7 +145,7 @@ def json_to_data(fn=None, return_json=True):
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return json.dumps(
+            return encode_json_body(
                 fn(*args, **kwargs)
             )
 
@@ -156,7 +176,7 @@ def form_to_params(fn=None, return_json=True):
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return json.dumps(
+            return encode_json_body(
                 fn(*args, **kwargs)
             )
 

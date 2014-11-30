@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 # Functions & classes =========================================================
 setup(
     name='rbottle',
-    version='0.1.0',
+    version='0.1.1',
     description="Decorators to make REST easier in Bottle.",
     long_description=open("README.rst").read(),
     url='https://github.com/Bystroushaak/rbottle',
@@ -29,6 +29,7 @@ setup(
     license='MIT',
 
     packages=find_packages(".", exclude=['ez_setup']),
+    package_dir={'': 'src'},
 
     include_package_data=True,
     zip_safe=True,

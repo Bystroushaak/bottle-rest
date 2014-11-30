@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 # Functions & classes =========================================================
 setup(
     name='rbottle',
-    version='0.1.1',
+    version='0.1.2',
     description="Decorators to make REST easier in Bottle.",
     long_description=open("README.rst").read(),
     url='https://github.com/Bystroushaak/rbottle',
@@ -37,4 +37,13 @@ setup(
         'setuptools',
         "bottle",
     ],
+    extras_require={
+        "test": [
+            "pytest"
+        ],
+        "docs": [
+            "sphinx",
+            "sphinxcontrib-napoleon",
+        ]
+    },
 )

@@ -101,34 +101,62 @@ def json_to_params(fn=None, return_json=True):
     return json_to_params_decorator
 
 
-def json_to_data(fn):
+def json_to_data(fn=None, return_json=True):
     """
     Decode JSON from the request and add it as ``data`` parameter for wrapped
     function.
+
+    Args:
+        return_json (bool, default True): Should the decorator automatically
+                    convert returned value to JSON?
     """
-    @wraps(fn)
-    @handle_type_error
-    def get_data_wrapper(*args, **kwargs):
-        kwargs["data"] = decode_json_body()
+    def json_to_data_decorator(fn):
+        @wraps(fn)
+        @handle_type_error
+        def get_data_wrapper(*args, **kwargs):
+            kwargs["data"] = decode_json_body()
 
-        return json.dumps(
-            fn(*args, **kwargs)
-        )
+            if not return_json:
+                return fn(*args, **kwargs)
 
-    return get_data_wrapper
+            return json.dumps(
+                fn(*args, **kwargs)
+            )
+
+        return get_data_wrapper
+
+    if fn:  # python decorator with optional parameters bukkake
+        return json_to_data_decorator(fn)
+
+    return json_to_data_decorator
 
 
-def form_to_params(fn):
+def form_to_params(fn=None, return_json=True):
     """
     Convert bottle forms request to parameters for the wrapped function.
+
+    Args:
+        return_json (bool, default True): Should the decorator automatically
+                    convert returned value to JSON?
     """
-    @wraps(fn)
-    @handle_type_error
-    def param_wrapper(*args, **kwargs):
-        kwargs.update(
-            dict(request.forms)
-        )
+    def forms_to_params_decorator(fn):
+        @wraps(fn)
+        @handle_type_error
+        def forms_to_params_wrapper(*args, **kwargs):
+            kwargs.update(
+                dict(request.forms)
+            )
 
-        return fn(*args, **kwargs)
+            if not return_json:
+                return fn(*args, **kwargs)
 
-    return param_wrapper
+            return json.dumps(
+                fn(*args, **kwargs)
+            )
+
+        return forms_to_params_wrapper
+
+    if fn:  # python decorator with optional parameters bukkake
+        return forms_to_params_decorator(fn)
+
+    return forms_to_params_decorator

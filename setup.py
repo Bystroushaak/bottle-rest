@@ -19,10 +19,14 @@ setup(
     author_email='bystrousak@kitakitsune.org',
 
     classifiers=[
-        "Programming Language :: Python :: 2.7",
+        "Framework :: Bottle",
+        "Topic :: Internet :: WWW/HTTP :: WSGI",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         "Topic :: Software Development :: Libraries",
+        "Programming Language :: Python :: 2.7",
+        "License :: OSI Approved :: MIT License",
     ],
-    license='proprietary software',
+    license='MIT',
 
     packages=find_packages(".", exclude=['ez_setup']),
 

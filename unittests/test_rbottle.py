@@ -15,10 +15,6 @@ import rbottle
 
 
 
-# Variables ===================================================================
-
-
-
 # Functions & classes =========================================================
 class MockRequest:
     def __init__(self, json):
@@ -99,6 +95,17 @@ def test_json_to_params_value():
     assert json_to_params_test() == "4"
 
 
+def test_json_to_params_bad_keyword():
+    rbottle.request = MockRequest('{"nope": 1}')
+
+    @rbottle.json_to_params
+    def json_to_params_test(param):
+        return param * 2
+
+    with pytest.raises(HTTPError):
+        json_to_params_test()
+
+
 # json_to_data tests ==========================================================
 def test_json_to_data():
     rbottle.request = MockRequest('2')
@@ -118,6 +125,28 @@ def test_json_to_data_no_json_parameter():
         return data * 2
 
     assert json_to_data_test() == 4
+
+
+def test_json_to_data_error_too_few():
+    rbottle.request = MockRequest('2')
+
+    @rbottle.json_to_data
+    def json_to_data_test():
+        pass
+
+    with pytest.raises(HTTPError):
+        json_to_data_test()
+
+
+def test_json_to_data_error_too_many():
+    rbottle.request = MockRequest('2')
+
+    @rbottle.json_to_data
+    def json_to_data_test(one, two):
+        pass
+
+    with pytest.raises(HTTPError):
+        json_to_data_test()
 
 
 # form_to_params tests ========================================================

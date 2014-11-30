@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 # Functions & classes =========================================================
 setup(
     name='rbottle',
-    version='0.1.2',
+    version='0.2.0',
     description="Decorators to make REST easier in Bottle.",
     long_description=open("README.rst").read(),
     url='https://github.com/Bystroushaak/rbottle',

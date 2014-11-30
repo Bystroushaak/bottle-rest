@@ -6,13 +6,12 @@
 # Imports =====================================================================
 import sys
 from StringIO import StringIO
-sys.path.append('src/')
 
 import pytest
-from bottle import HTTPError
 
+sys.path = ['src/rbottle'] + sys.path
 import rbottle
-
+from rbottle import HTTPError
 
 
 # Functions & classes =========================================================
@@ -30,6 +29,12 @@ def test_decode_json_body():
     with pytest.raises(HTTPError):
         rbottle.request = MockRequest('{')
         rbottle.decode_json_body()
+
+
+def test_encode_json_body():
+    assert rbottle.encode_json_body({"one": 1}) == '''{
+    "one": 1
+}'''
 
 
 def test_handle_type_error():

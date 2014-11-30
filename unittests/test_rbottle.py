@@ -23,6 +23,7 @@ import rbottle
 class MockRequest:
     def __init__(self, json):
         self.body = StringIO(json)
+        self.forms = {}
 
 
 def test_decode_json_body():
@@ -57,6 +58,7 @@ def test_handle_type_error():
     assert exactly_right_ammount_of_parameters("one") is None
 
 
+# json_to_params tests ========================================================
 def test_json_to_params():
     rbottle.request = MockRequest('{"param": 2}')
 
@@ -95,3 +97,47 @@ def test_json_to_params_value():
         return param * 2
 
     assert json_to_params_test() == "4"
+
+
+# json_to_data tests ==========================================================
+def test_json_to_data():
+    rbottle.request = MockRequest('2')
+
+    @rbottle.json_to_data
+    def json_to_data_test(data):
+        return data * 2
+
+    assert json_to_data_test() == "4"
+
+
+def test_json_to_data_no_json_parameter():
+    rbottle.request = MockRequest('2')
+
+    @rbottle.json_to_data(return_json=False)  # don't convert result to JSON
+    def json_to_data_test(data):
+        return data * 2
+
+    assert json_to_data_test() == 4
+
+
+# form_to_params tests ========================================================
+def test_form_to_params():
+    rbottle.request = MockRequest('""')
+    rbottle.request.forms = {"param": 2}
+
+    @rbottle.form_to_params
+    def form_to_params_test(param):
+        return param * 2
+
+    assert form_to_params_test() == "4"
+
+
+def test_form_to_params_no_json_parameter():
+    rbottle.request = MockRequest('""')
+    rbottle.request.forms = {"param": 2}
+
+    @rbottle.form_to_params(return_json=False)  # don't convert result to JSON
+    def form_to_params_test(param):
+        return param * 2
+
+    assert form_to_params_test() == 4

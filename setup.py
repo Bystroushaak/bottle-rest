@@ -6,13 +6,23 @@
 # Imports =====================================================================
 from setuptools import setup, find_packages
 
+from docs import getVersion
+
+
+# Variables ===================================================================
+changelog = open('CHANGES.rst').read()
+long_description = "\n\n".join([
+    open('README.rst').read(),
+    changelog
+])
+
 
 # Functions & classes =========================================================
 setup(
-    name='rbottle',
-    version='0.2.0',
+    name='bottle-rest',
+    version=getVersion(changelog),
     description="Decorators to make REST easier in Bottle.",
-    long_description=open("README.rst").read(),
+    long_description=long_description,
     url='https://github.com/Bystroushaak/rbottle',
 
     author='Bystroushaak',

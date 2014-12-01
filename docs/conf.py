@@ -3,7 +3,7 @@
 import sys
 import os
 
-sys.path.append('../src/')
+sys.path.append('../src/bottle_rest/')
 
 extensions = [
     'sphinx.ext.autodoc',
@@ -36,11 +36,21 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'rbottle'
+project = 'bottle-rest'
 copyright = '2014, Bystroushaak'
 
-# The short X.Y version.
-version = "0.1"
+# The full version, including alpha/beta/rc tags.
+try:
+    # read data from CHANGES.rst
+    sys.path.insert(0, os.path.abspath('../'))
+    from docs import getVersion
+    release = getVersion(open("../CHANGES.rst").read())
+except:
+    # this is here specially for readthedocs, which downloads only docs, not
+    # other files
+    fh = urllib.urlopen("https://pypi.python.org/pypi/" + project + "/")
+    release = filter(lambda x: "<title>" in x, fh.read().splitlines())
+    release = release[0].split(":")[0].split()[1]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

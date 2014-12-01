@@ -1,7 +1,7 @@
-rbottle documentation
-=====================
+bottle-rest documentation
+=========================
 
-Welcome in the ``rbottle`` documentation. This package is used to make easier
+Welcome in the ``bottle-rest`` documentation. This package is used to make easier
 creating REST applications using `Bottle <http://bottlepy.org>`_ web framework.
 
 API documentation
@@ -9,11 +9,11 @@ API documentation
 .. toctree::
     :maxdepth: 2
 
-    api/rbottle
+    api/bottle_rest
 
 What is it
 ----------
-`rbottle` is a collection of decorators, which can transform incoming data
+``bottle-rest`` is a collection of decorators, which can transform incoming data
 to parameters of your bottle functions/methods and outgoing data to JSON.
 
 REST in bottle
@@ -26,10 +26,10 @@ encoded data.
 This is not bad when you have to do it once, but can get pretty annoying when
 yout try to build something bigger and have to repeat the steps again and again.
 
-rbottle
-+++++++
+bottle-rest
++++++++++++
 
-``rbottle`` gives you three wrappers to make this repetitive work little bit
+``bottle-rest`` gives you three wrappers to make this repetitive work little bit
 easier: :func:`.json_to_params`, :func:`.json_to_data` and
 :func:`.form_to_params`.
 
@@ -50,8 +50,8 @@ code like*::
 
 you can use just::
 
-    import rbottle
     from bottle import post
+    from bottle_rest import json_to_params
 
     @post("/somepath")
     @json_to_params
@@ -129,7 +129,7 @@ and can be easily installed using
 
 ::
 
-    sudo pip install rbottle
+    sudo pip install bottle-rest
 
 Testing
 -------
@@ -144,9 +144,18 @@ Which will output something like::
  platform linux2 -- Python 2.7.6 -- py-1.4.23 -- pytest-2.6.0
  collected 13 items 
  
- unittests/test_rbottle.py .............
+ unittests/test_bottle_rest.py .............
  
  ========================== 13 passed in 0.09 seconds ===========================
+
+
+Source code
+-----------
+This project is released as opensource (GPL) and source codes can be found at
+GitHub:
+
+- https://github.com/Bystroushaak/bottle-rest
+
 
 Indices and tables
 ==================

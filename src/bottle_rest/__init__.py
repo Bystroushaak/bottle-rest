@@ -4,4 +4,4 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
-from rbottle import *
+from bottle_rest import *

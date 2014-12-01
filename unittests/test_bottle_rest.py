@@ -9,9 +9,9 @@ from StringIO import StringIO
 
 import pytest
 
-sys.path = ['src/rbottle'] + sys.path
-import rbottle
-from rbottle import HTTPError
+sys.path = ['src/bottle_rest'] + sys.path
+import bottle_rest
+from bottle_rest import HTTPError
 
 
 # Functions & classes =========================================================
@@ -22,37 +22,37 @@ class MockRequest:
 
 
 def test_decode_json_body():
-    rbottle.request = MockRequest('{"hello": "there"}')
+    bottle_rest.request = MockRequest('{"hello": "there"}')
 
-    assert rbottle.decode_json_body() == {"hello": "there"}
+    assert bottle_rest.decode_json_body() == {"hello": "there"}
 
     with pytest.raises(HTTPError):
-        rbottle.request = MockRequest('{')
-        rbottle.decode_json_body()
+        bottle_rest.request = MockRequest('{')
+        bottle_rest.decode_json_body()
 
 
 def test_encode_json_body():
-    assert rbottle.encode_json_body({"one": 1}) == '''{
+    assert bottle_rest.encode_json_body({"one": 1}) == '''{
     "one": 1
 }'''
 
 
 def test_handle_type_error():
-    @rbottle.handle_type_error
+    @bottle_rest.handle_type_error
     def too_much_parameters(one):
         pass
 
     with pytest.raises(HTTPError):
         too_much_parameters("one", "two")
 
-    @rbottle.handle_type_error
+    @bottle_rest.handle_type_error
     def too_few_parameters(one, two, three):
         pass
 
     with pytest.raises(HTTPError):
         too_few_parameters("one")
 
-    @rbottle.handle_type_error
+    @bottle_rest.handle_type_error
     def exactly_right_ammount_of_parameters(one):
         pass
 
@@ -61,9 +61,9 @@ def test_handle_type_error():
 
 # json_to_params tests ========================================================
 def test_json_to_params():
-    rbottle.request = MockRequest('{"param": 2}')
+    bottle_rest.request = MockRequest('{"param": 2}')
 
-    @rbottle.json_to_params
+    @bottle_rest.json_to_params
     def json_to_params_test(param):
         return param * 2
 
@@ -71,9 +71,9 @@ def test_json_to_params():
 
 
 def test_json_to_params_no_json_parameter():
-    rbottle.request = MockRequest('{"param": 2}')
+    bottle_rest.request = MockRequest('{"param": 2}')
 
-    @rbottle.json_to_params(return_json=False)
+    @bottle_rest.json_to_params(return_json=False)
     def json_to_params_test_no_json(param):
         return param * 2
 
@@ -81,9 +81,9 @@ def test_json_to_params_no_json_parameter():
 
 
 def test_json_to_params_list():
-    rbottle.request = MockRequest('[2]')  # different parameter is used
+    bottle_rest.request = MockRequest('[2]')  # different parameter is used
 
-    @rbottle.json_to_params
+    @bottle_rest.json_to_params
     def json_to_params_test(param):
         return param * 2
 
@@ -91,9 +91,9 @@ def test_json_to_params_list():
 
 
 def test_json_to_params_value():
-    rbottle.request = MockRequest('2')  # different parameter is used
+    bottle_rest.request = MockRequest('2')  # different parameter is used
 
-    @rbottle.json_to_params
+    @bottle_rest.json_to_params
     def json_to_params_test(param):
         return param * 2
 
@@ -101,9 +101,9 @@ def test_json_to_params_value():
 
 
 def test_json_to_params_bad_keyword():
-    rbottle.request = MockRequest('{"nope": 1}')
+    bottle_rest.request = MockRequest('{"nope": 1}')
 
-    @rbottle.json_to_params
+    @bottle_rest.json_to_params
     def json_to_params_test(param):
         return param * 2
 
@@ -113,9 +113,9 @@ def test_json_to_params_bad_keyword():
 
 # json_to_data tests ==========================================================
 def test_json_to_data():
-    rbottle.request = MockRequest('2')
+    bottle_rest.request = MockRequest('2')
 
-    @rbottle.json_to_data
+    @bottle_rest.json_to_data
     def json_to_data_test(data):
         return data * 2
 
@@ -123,9 +123,9 @@ def test_json_to_data():
 
 
 def test_json_to_data_no_json_parameter():
-    rbottle.request = MockRequest('2')
+    bottle_rest.request = MockRequest('2')
 
-    @rbottle.json_to_data(return_json=False)  # don't convert result to JSON
+    @bottle_rest.json_to_data(return_json=False)  # don't convert result to JSON
     def json_to_data_test(data):
         return data * 2
 
@@ -133,9 +133,9 @@ def test_json_to_data_no_json_parameter():
 
 
 def test_json_to_data_error_too_few():
-    rbottle.request = MockRequest('2')
+    bottle_rest.request = MockRequest('2')
 
-    @rbottle.json_to_data
+    @bottle_rest.json_to_data
     def json_to_data_test():
         pass
 
@@ -144,9 +144,9 @@ def test_json_to_data_error_too_few():
 
 
 def test_json_to_data_error_too_many():
-    rbottle.request = MockRequest('2')
+    bottle_rest.request = MockRequest('2')
 
-    @rbottle.json_to_data
+    @bottle_rest.json_to_data
     def json_to_data_test(one, two):
         pass
 
@@ -156,10 +156,10 @@ def test_json_to_data_error_too_many():
 
 # form_to_params tests ========================================================
 def test_form_to_params():
-    rbottle.request = MockRequest('""')
-    rbottle.request.forms = {"param": 2}
+    bottle_rest.request = MockRequest('""')
+    bottle_rest.request.forms = {"param": 2}
 
-    @rbottle.form_to_params
+    @bottle_rest.form_to_params
     def form_to_params_test(param):
         return param * 2
 
@@ -167,10 +167,11 @@ def test_form_to_params():
 
 
 def test_form_to_params_no_json_parameter():
-    rbottle.request = MockRequest('""')
-    rbottle.request.forms = {"param": 2}
+    bottle_rest.request = MockRequest('""')
+    bottle_rest.request.forms = {"param": 2}
 
-    @rbottle.form_to_params(return_json=False)  # don't convert result to JSON
+    # don't convert result to JSON
+    @bottle_rest.form_to_params(return_json=False)
     def form_to_params_test(param):
         return param * 2
 

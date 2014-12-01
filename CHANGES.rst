@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.1
+-----
+    - Fixed bug in documentation.
+
 0.3.0
 -----
     - As suggested in #3 - project renamed from ``rbottle`` to ``bottle-rest``.

@@ -1,9 +1,10 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os
+import sys
+import urllib
 
-sys.path.append('../src/bottle_rest/')
+sys.path.append('../src/bottle_rest')
 
 extensions = [
     'sphinx.ext.autodoc',

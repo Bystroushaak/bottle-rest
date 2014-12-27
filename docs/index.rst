@@ -123,7 +123,7 @@ JSON, unless the ``return_json=False`` parameter is specified.
 
 Installation
 ------------
-Module is hosted at `PYPI <https://pypi.python.org/pypi/rbottle>`_,
+Module is hosted at `PYPI <https://pypi.python.org/pypi/bottle-rest>`_,
 and can be easily installed using
 `PIP <http://en.wikipedia.org/wiki/Pip_%28package_manager%29>`_:
 

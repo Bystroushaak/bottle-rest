@@ -11,6 +11,33 @@ from bottle import request, response, HTTPError
 
 
 # Functions & classes =========================================================
+def pretty_dump(fn):
+    """
+    Decorator used to output prettified JSON.
+
+    ``response.content_type`` is set to ``application/json; charset=utf-8``.
+
+    Args:
+        fn (fn pointer): Function returning any basic python data structure.
+
+    Returns:
+        str: Data converted to prettified JSON.
+    """
+    @wraps(fn)
+    def pretty_dump_wrapper(*args, **kwargs):
+        response.content_type = "application/json; charset=utf-8"
+
+        return json.dumps(
+            fn(*args, **kwargs),
+
+            # sort_keys=True,
+            indent=4,
+            separators=(',', ': ')
+        )
+
+    return pretty_dump_wrapper
+
+
 def decode_json_body():
     """
     Decode ``bottle.request.body`` to JSON.
@@ -35,7 +62,7 @@ def encode_json_body(data):
     ``application/json; charset=utf-8``.
 
     Args:
-        data: Any basic python data structure.
+        data (any): Any basic python data structure.
 
     Returns:
         str: Data converted to prettified JSON.

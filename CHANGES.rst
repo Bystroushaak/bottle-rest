@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.0
+-----
+    - Added ``pretty_dump()`` decorator.
+
 0.3.2
 -----
     - Fixed bug in @wraps, caused by some strange python behaviour.

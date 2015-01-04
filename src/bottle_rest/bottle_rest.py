@@ -58,11 +58,11 @@ def handle_type_error(fn):
         HTTPError: 400 in case too many/too little function parameters were \
                    given.
     """
-    def any_match(string_list, obj):
-        return filter(lambda x: x in obj, string_list)
-
     @wraps(fn)
     def handle_type_error_wrapper(*args, **kwargs):
+        def any_match(string_list, obj):
+            return filter(lambda x: x in obj, string_list)
+
         try:
             return fn(*args, **kwargs)
         except TypeError as e:

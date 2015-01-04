@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.3.2
+-----
+    - Fixed bug in @wraps, caused by some strange python behaviour.
+
 0.3.1
 -----
     - Fixed bug in documentation.

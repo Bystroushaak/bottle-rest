@@ -4,6 +4,7 @@ Changelog
 0.4.1
 -----
     - Merged #5 to fix ``docs/__init__.py``, which didn't work at Python 3.
+    - Rewritten ``docs/__init__.py``, when the merge for Python 3 broken Python 2 support.
 
 0.4.0
 -----

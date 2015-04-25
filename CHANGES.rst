@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.1
+-----
+    - Merged #5 to fix ``docs/__init__.py``, which didn't work at Python 3.
+
 0.4.0
 -----
     - Added ``pretty_dump()`` decorator.

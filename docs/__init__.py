@@ -12,7 +12,7 @@ def hasDigit(s):
 def getVersion(data):
     data = data.splitlines()
     return filter(
-        lambda (x, y):
+        lambda x, y:
             len(x) == len(y) and allSame(y) and hasDigit(x) and "." in x,
         zip(data, data[1:])
     )[0][0]

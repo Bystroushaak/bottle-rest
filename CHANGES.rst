@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.2
+-----
+    - Fixed #8 - deprecation warning when accessing the Exception.message property.
+
 0.4.1
 -----
     - Merged #5 to fix ``docs/__init__.py``, which didn't work at Python 3.

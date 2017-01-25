@@ -32,7 +32,7 @@ def pretty_dump(fn):
 
             # sort_keys=True,
             indent=4,
-            separators=(',', ': ')
+            separators=(', ', ': ')
         )
 
     return pretty_dump_wrapper
@@ -53,7 +53,7 @@ def decode_json_body():
     try:
         return json.loads(raw_data)
     except ValueError as e:
-        raise HTTPError(400, e.message)
+        raise HTTPError(400, e.__str__())
 
 
 def encode_json_body(data):
@@ -93,13 +93,14 @@ def handle_type_error(fn):
         try:
             return fn(*args, **kwargs)
         except TypeError as e:
+            message = e.__str__()
             str_list = [
                 "takes exactly",
                 "got an unexpected",
                 "takes no argument",
             ]
-            if fn.__name__ in e.message and any_match(str_list, e.message):
-                raise HTTPError(400, e.message)
+            if fn.__name__ in message and any_match(str_list, message):
+                raise HTTPError(400, message)
 
             raise  # This will cause 500: Internal server error
 

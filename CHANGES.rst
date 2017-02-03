@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.4.3
+-----
+    - Fixed separator in JSON prettify.
+
 0.4.2
 -----
     - Fixed #8 - deprecation warning when accessing the Exception.message property.

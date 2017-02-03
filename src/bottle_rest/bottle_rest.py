@@ -32,7 +32,7 @@ def pretty_dump(fn):
 
             # sort_keys=True,
             indent=4,
-            separators=(', ', ': ')
+            separators=(',', ': ')
         )
 
     return pretty_dump_wrapper

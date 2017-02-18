@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0
+-----
+    - Added support for python 3 (#9).
+    - Added support for file-like objects (#7).
+
 0.4.3
 -----
     - Fixed separator in JSON prettify.

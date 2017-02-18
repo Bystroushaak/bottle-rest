@@ -75,6 +75,10 @@ def encode_json_body(data):
     Returns:
         str: Data converted to prettified JSON.
     """
+    # support for StringIO / file - like objects
+    if hasattr(data, "read"):
+        return data
+
     response.content_type = "application/json; charset=utf-8"
 
     return json.dumps(

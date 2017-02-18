@@ -10,10 +10,10 @@ Introduction
 .. image:: https://readthedocs.org/projects/bottle-rest/badge/?version=latest
     :target: http://bottle-rest.readthedocs.org/
 
-.. image:: https://img.shields.io/pypi/l/bottle-rest.svg
-
 .. image:: https://img.shields.io/github/issues/Bystroushaak/bottle-rest.svg
     :target: https://github.com/Bystroushaak/bottle-rest/issues
+
+.. image:: https://img.shields.io/pypi/l/bottle-rest.svg
 
 This package is used to make easier creating REST applications using
 `Bottle <http://bottlepy.org>`_ web framework.

@@ -4,10 +4,18 @@
 # Interpreter version: python 2.7
 #
 # Imports =====================================================================
+import sys
 import json
 from functools import wraps
 
 from bottle import request, response, HTTPError
+
+
+PRIMITIVE_TYPES = {bool, int, float, str}
+
+if sys.version_info < (3, 0):
+    PRIMITIVE_TYPES.add(long)
+    PRIMITIVE_TYPES.add(unicode)
 
 
 # Functions & classes =========================================================
@@ -136,7 +144,7 @@ def json_to_params(fn=None, return_json=True):
                 allowed_keys = set(data.keys()) - set(kwargs.keys())
                 for key in allowed_keys:
                     kwargs[key] = data[key]
-            elif type(data) in [bool, int, float, long, str, unicode]:
+            elif type(data) in PRIMITIVE_TYPES:
                 args = list(args)
                 args.append(data)
 

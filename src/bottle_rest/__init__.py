@@ -56,7 +56,7 @@ def decode_json_body():
     Raises:
         HTTPError: 400 in case the data was malformed.
     """
-    raw_data = request.body.read()
+    raw_data = request.body.read() or '{}'
 
     try:
         return json.loads(raw_data)

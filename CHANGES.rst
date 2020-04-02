@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.5.2
+-----
+    - Change in the JSON imports that makes it easier to override the json encoder/decoder, if necessary. (by https://github.com/eevleevs in #11)
+
+0.5.1
+-----
+    - Provided default for raw_data (by https://github.com/eevleevs in #10)
+
 0.5.0
 -----
     - Added support for python 3 (#9).

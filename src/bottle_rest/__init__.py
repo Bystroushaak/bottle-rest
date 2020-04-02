@@ -5,7 +5,7 @@
 #
 # Imports =====================================================================
 import sys
-import json
+from json import dumps, loads
 from functools import wraps
 
 from bottle import request, response, HTTPError
@@ -35,7 +35,7 @@ def pretty_dump(fn):
     def pretty_dump_wrapper(*args, **kwargs):
         response.content_type = "application/json; charset=utf-8"
 
-        return json.dumps(
+        return dumps(
             fn(*args, **kwargs),
 
             # sort_keys=True,
@@ -59,7 +59,7 @@ def decode_json_body():
     raw_data = request.body.read() or '{}'
 
     try:
-        return json.loads(raw_data)
+        return loads(raw_data)
     except ValueError as e:
         raise HTTPError(400, e.__str__())
 
@@ -81,7 +81,7 @@ def encode_json_body(data):
 
     response.content_type = "application/json; charset=utf-8"
 
-    return json.dumps(
+    return dumps(
         data,
         indent=4,
         separators=(',', ': ')

@@ -1,24 +1,15 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# Interpreter version: python 2.7
-#
-# Imports =====================================================================
-import sys
-from json import dumps, loads
+from json import dumps
+from json import loads
 from functools import wraps
 
-from bottle import request, response, HTTPError
+from bottle import request
+from bottle import response
+from bottle import HTTPError
 
 
 PRIMITIVE_TYPES = {bool, int, float, str}
 
-if sys.version_info < (3, 0):
-    PRIMITIVE_TYPES.add(long)
-    PRIMITIVE_TYPES.add(unicode)
 
-
-# Functions & classes =========================================================
 def pretty_dump(fn):
     """
     Decorator used to output prettified JSON.
@@ -37,8 +28,6 @@ def pretty_dump(fn):
 
         return dumps(
             fn(*args, **kwargs),
-
-            # sort_keys=True,
             indent=4,
             separators=(',', ': ')
         )
@@ -226,3 +215,37 @@ def form_to_params(fn=None, return_json=True):
         return forms_to_params_decorator(fn)
 
     return forms_to_params_decorator
+
+
+def get_to_params(fn=None, return_json=True):
+    """
+    Convert bottle get parameters to parameters for the wrapped function.
+
+    Some of the JavaScript libraries don't work well with sending the
+    JSON body via GET request, so you can use this.
+
+    Args:
+        return_json (bool, default True): Should the decorator automatically
+                    convert returned value to JSON?
+    """
+    def get_to_params_decorator(fn):
+        @handle_type_error
+        @wraps(fn)
+        def forms_to_params_wrapper(*args, **kwargs):
+            kwargs.update(
+                dict(request.query.decode())
+            )
+
+            if not return_json:
+                return fn(*args, **kwargs)
+
+            return encode_json_body(
+                fn(*args, **kwargs)
+            )
+
+        return forms_to_params_wrapper
+
+    if fn:  # python decorator with optional parameters bukkake
+        return get_to_params_decorator(fn)
+
+    return get_to_params_decorator

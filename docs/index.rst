@@ -121,6 +121,10 @@ variables.
 All returned data from wrapped function will be automatically converted to the
 JSON, unless the ``return_json=False`` parameter is specified.
 
+get_to_params
++++++++++++++
+Useful mostly for the JavaScript libraries which can't send JSON in the body. Converts get parameters to your function.
+
 Installation
 ------------
 Module is hosted at `PYPI <https://pypi.python.org/pypi/bottle-rest>`_,

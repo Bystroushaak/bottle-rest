@@ -22,15 +22,12 @@ def pretty_dump(fn):
     Returns:
         str: Data converted to prettified JSON.
     """
+
     @wraps(fn)
     def pretty_dump_wrapper(*args, **kwargs):
         response.content_type = "application/json; charset=utf-8"
 
-        return dumps(
-            fn(*args, **kwargs),
-            indent=4,
-            separators=(',', ': ')
-        )
+        return dumps(fn(*args, **kwargs), indent=4, separators=(",", ": "))
 
     return pretty_dump_wrapper
 
@@ -45,7 +42,7 @@ def decode_json_body():
     Raises:
         HTTPError: 400 in case the data was malformed.
     """
-    raw_data = request.body.read() or '{}'
+    raw_data = request.body.read() or "{}"
 
     try:
         return loads(raw_data)
@@ -70,11 +67,7 @@ def encode_json_body(data):
 
     response.content_type = "application/json; charset=utf-8"
 
-    return dumps(
-        data,
-        indent=4,
-        separators=(',', ': ')
-    )
+    return dumps(data, indent=4, separators=(",", ": "))
 
 
 def handle_type_error(fn):
@@ -86,6 +79,7 @@ def handle_type_error(fn):
         HTTPError: 400 in case too many/too little function parameters were \
                    given.
     """
+
     @wraps(fn)
     def handle_type_error_wrapper(*args, **kwargs):
         def any_match(string_list, obj):
@@ -124,6 +118,7 @@ def json_to_params(fn=None, return_json=True):
         return_json (bool, default True): Should the decorator automatically
                     convert returned value to JSON?
     """
+
     def json_to_params_decorator(fn):
         @handle_type_error
         @wraps(fn)
@@ -144,9 +139,7 @@ def json_to_params(fn=None, return_json=True):
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return encode_json_body(
-                fn(*args, **kwargs)
-            )
+            return encode_json_body(fn(*args, **kwargs))
 
         return json_to_params_wrapper
 
@@ -165,6 +158,7 @@ def json_to_data(fn=None, return_json=True):
         return_json (bool, default True): Should the decorator automatically
                     convert returned value to JSON?
     """
+
     def json_to_data_decorator(fn):
         @handle_type_error
         @wraps(fn)
@@ -174,9 +168,7 @@ def json_to_data(fn=None, return_json=True):
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return encode_json_body(
-                fn(*args, **kwargs)
-            )
+            return encode_json_body(fn(*args, **kwargs))
 
         return get_data_wrapper
 
@@ -194,20 +186,17 @@ def form_to_params(fn=None, return_json=True):
         return_json (bool, default True): Should the decorator automatically
                     convert returned value to JSON?
     """
+
     def forms_to_params_decorator(fn):
         @handle_type_error
         @wraps(fn)
         def forms_to_params_wrapper(*args, **kwargs):
-            kwargs.update(
-                dict(request.forms)
-            )
+            kwargs.update(dict(request.forms))
 
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return encode_json_body(
-                fn(*args, **kwargs)
-            )
+            return encode_json_body(fn(*args, **kwargs))
 
         return forms_to_params_wrapper
 
@@ -228,20 +217,17 @@ def get_to_params(fn=None, return_json=True):
         return_json (bool, default True): Should the decorator automatically
                     convert returned value to JSON?
     """
+
     def get_to_params_decorator(fn):
         @handle_type_error
         @wraps(fn)
         def forms_to_params_wrapper(*args, **kwargs):
-            kwargs.update(
-                dict(request.query.decode())
-            )
+            kwargs.update(dict(request.query.decode()))
 
             if not return_json:
                 return fn(*args, **kwargs)
 
-            return encode_json_body(
-                fn(*args, **kwargs)
-            )
+            return encode_json_body(fn(*args, **kwargs))
 
         return forms_to_params_wrapper
 

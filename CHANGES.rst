@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.6.0
+-----
+    - Added `@get_to_params`.
+    - Code reformatted.
+    - Removed support for py2.7.
+
 0.5.2
 -----
     - Change in the JSON imports that makes it easier to override the json encoder/decoder, if necessary. (by https://github.com/eevleevs in #11)
